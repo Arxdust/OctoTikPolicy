@@ -122,7 +122,7 @@
     <header>
       <div class="logo">O</div>
       <h1>Privacy Policy</h1>
-      <p class="effective">Effective date: May 25, 2026</p>
+      <p class="effective">Effective date: June 19, 2026</p>
       <div class="apps">
         <span class="pill">OctoTik</span>
         <span class="pill">OctoClient</span>
@@ -136,32 +136,43 @@
         iOS and Windows. <strong>OctoTik</strong> is a MikroTik Hotspot management
         tool, and <strong>OctoClient</strong> is a client that replaces the web
         login page for authorizing on a MikroTik Hotspot. This policy explains how
-        the apps handle your information. In short: the apps do not run any servers
-        and do not collect your data. The same terms apply to each app individually.
+        the apps handle your information. In short: the apps do not run any backend
+        servers and do not collect your data. Router operations remain local, and
+        OctoClient's optional Local Chat exchanges data directly with other devices
+        on the same local network.
       </p>
     </div>
 
     <div class="card">
       <h2><span class="num">1.</span>Information We Collect</h2>
       <p>
-        The apps do not collect, store, or transmit any personal information to
-        our servers or to any third parties. We operate no backend servers. All
-        communication happens locally and directly between your device and your
-        own MikroTik router.
+        The apps do not transmit personal information to us, and we operate no
+        backend servers. Router-related communication happens directly between
+        your device and your MikroTik router. If you use OctoClient's Local Chat,
+        your chat display name, device name, randomly generated device identifier,
+        local IP address, presence information and messages are exchanged directly
+        with other OctoClient devices on the same Wi-Fi or local network. A direct
+        message is sent to its recipient; a message in the common chat is sent to
+        the other participating devices visible on that network.
       </p>
     </div>
 
     <div class="card">
       <h2><span class="num">2.</span>Local Storage</h2>
-      <p>The following data is stored only on your device and never leaves it:</p>
+      <p>The following data may be stored locally on your device:</p>
       <ul>
         <li>Router connection details (host, port, username);</li>
         <li>Your router password, kept in the platform's secure storage;</li>
-        <li>App preferences such as theme and tab layout.</li>
+        <li>App preferences such as theme and tab layout;</li>
+        <li>For OctoClient Local Chat: your chat display name, device name,
+          randomly generated device identifier, discovered devices, conversations
+          and message history.</li>
       </ul>
       <p>
-        You can remove all of this data at any time by clearing an app's data or
-        uninstalling the app.
+        You can clear Local Chat history from its settings. You can remove all
+        locally stored app data by clearing the app's data or uninstalling it.
+        Removing your local copy does not remove messages already received and
+        stored on another participant's device.
       </p>
     </div>
 
@@ -179,7 +190,10 @@
       <h2><span class="num">4.</span>Permissions</h2>
       <p>The apps request only the permissions they need to function:</p>
       <ul>
-        <li>Internet / local network access — to communicate with your router.</li>
+        <li>Internet access — to communicate with your router and check network
+          connectivity;</li>
+        <li>Local network / Wi-Fi state access — to discover nearby OctoClient
+          devices and exchange Local Chat messages on the same network.</li>
       </ul>
     </div>
 
@@ -204,9 +218,12 @@
     <div class="card">
       <h2><span class="num">7.</span>Data Security</h2>
       <p>
-        Because no data is sent to us, there is no central database that could be
-        breached. Credentials are stored using the secure storage facilities
-        provided by your operating system.
+        Because no data is sent to us, there is no central chat database operated
+        by us. Credentials are stored using the secure storage facilities provided
+        by your operating system. Local Chat messages travel directly over the
+        local network and are not end-to-end encrypted. Other people or devices
+        with access to that network may be able to observe network traffic, so you
+        should not use Local Chat to send passwords or other sensitive information.
       </p>
     </div>
 
