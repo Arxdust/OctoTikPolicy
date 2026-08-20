@@ -182,6 +182,61 @@
     button.copy:hover { border-color: var(--accent); color: var(--accent); }
     button.copy.done { border-color: var(--success); color: var(--success); }
 
+    /* Крипта: строка + раскрывающийся QR под ней. */
+    .entry + .entry .method { border-top: 1px solid var(--border); }
+    .entry .method { border-top: 0; }
+    .method .net {
+      font-weight: 600;
+      opacity: 0.85;
+    }
+    .value.mono {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .tools {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button.qr-toggle {
+      appearance: none;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-top);
+      color: var(--muted);
+    }
+    button.qr-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    button.qr-toggle[aria-expanded="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(42, 171, 238, 0.14);
+    }
+    .qr {
+      display: flex;
+      justify-content: center;
+      padding: 2px 0 18px;
+    }
+    .qr[hidden] { display: none; }
+    .qr svg {
+      width: 210px;
+      height: 210px;
+      max-width: 70vw;
+      border-radius: 12px;
+      /* Белое поле вокруг кода — сканеры не любят тёмный фон. */
+      background: #fff;
+      padding: 6px;
+      box-sizing: content-box;
+    }
+
     .thanks {
       color: var(--muted);
       font-style: italic;
@@ -254,19 +309,142 @@
         <span class="action" data-i18n="open"></span>
       </a>
 
-      <!--
-        Новый способ доната добавляется такой же строкой. Для кошелька, куда
-        нужно скопировать адрес, — блок с кнопкой .copy (как у карты):
+      <!-- Новый фиатный способ — такая же строка .method. Криптовалюта живёт
+           в карточке ниже, её блоки собирает tools/crypto_row.py (там же QR). -->
+    </div>
 
+    <div class="card">
+      <h2 id="crypto-title"></h2>
+      <p class="note" id="crypto-warn"></p>
+
+      <div class="entry">
         <div class="method">
           <span class="glyph">₿</span>
           <span class="body">
-            <span class="label">Bitcoin</span>
-            <span class="value">bc1q…</span>
+            <span class="label">Bitcoin <span class="net">Mainnet</span></span>
+            <span class="value mono">bc1q30x5a7erc7mehzm8nrrgjxeesu9ncsdsallfh2</span>
           </span>
-          <button type="button" class="copy" data-copy="bc1q…"></button>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="bc1q30x5a7erc7mehzm8nrrgjxeesu9ncsdsallfh2"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-btc"
+                    aria-expanded="false" aria-controls="qr-btc">QR</button>
+          </span>
         </div>
-      -->
+        <div class="qr" id="qr-btc" hidden><svg viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m4 0h2m3 0h1m2 0h2m1 0h7m-29 1h1m5 0h1m2 0h1m1 0h1m3 0h4m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m4 0h1m3 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m2 0h5m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h4m1 0h1m2 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h3m3 0h2m1 0h1m4 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h3m1 0h1m2 0h2m2 0h2m-21 1h1m1 0h5m3 0h1m1 0h4m1 0h1m1 0h1m2 0h5m-26 1h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h9m3 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m4 0h5m2 0h1m3 0h1m-23 1h2m2 0h3m2 0h1m5 0h1m3 0h1m1 0h1m-24 1h2m2 0h2m1 0h2m1 0h1m1 0h5m1 0h3m1 0h1m1 0h3m-25 1h1m1 0h1m1 0h3m6 0h2m1 0h1m2 0h3m3 0h1m-25 1h1m1 0h2m1 0h1m2 0h5m1 0h1m1 0h1m2 0h5m-27 1h1m3 0h1m3 0h2m7 0h1m1 0h1m1 0h3m3 0h1m-27 1h7m1 0h1m2 0h3m1 0h1m1 0h1m5 0h3m-28 1h3m2 0h1m1 0h1m3 0h1m1 0h1m2 0h1m1 0h7m2 0h2m-29 1h1m1 0h6m1 0h3m3 0h1m6 0h2m-24 1h1m2 0h1m1 0h1m4 0h1m5 0h1m2 0h1m3 0h3m1 0h2m-29 1h1m2 0h5m1 0h1m1 0h1m1 0h1m3 0h1m1 0h9m-20 1h1m1 0h1m3 0h1m1 0h1m1 0h3m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m-25 1h1m5 0h1m1 0h1m1 0h2m3 0h1m3 0h2m3 0h1m2 0h2m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h2m2 0h9m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h2m9 0h1m1 0h1m1 0h2m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h5m1 0h3m1 0h2m1 0h1m-28 1h1m5 0h1m2 0h2m2 0h1m1 0h2m3 0h1m2 0h3m1 0h1m-28 1h7m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1m4 0h1m1 0h1"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">Ξ</span>
+          <span class="body">
+            <span class="label">Ethereum <span class="net">Mainnet</span></span>
+            <span class="value mono">0x8C5D12d23A0676b17C5374Eb698Ba3991ABFFC01</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="0x8C5D12d23A0676b17C5374Eb698Ba3991ABFFC01"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-eth"
+                    aria-expanded="false" aria-controls="qr-eth">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-eth" hidden><svg viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m2 0h2m1 0h1m2 0h2m2 0h1m2 0h7m-29 1h1m5 0h1m2 0h2m2 0h1m1 0h3m2 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m2 0h5m3 0h1m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m1 0h2m3 0h1m2 0h1m1 0h1m-21 1h1m1 0h5m5 0h1m1 0h3m3 0h1m1 0h5m-27 1h1m1 0h1m5 0h1m1 0h1m7 0h2m2 0h1m1 0h1m2 0h1m-25 1h2m1 0h2m2 0h2m1 0h4m3 0h2m1 0h4m-27 1h2m1 0h1m4 0h1m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m2 0h1m2 0h1m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m3 0h1m2 0h5m-27 1h1m2 0h1m5 0h2m5 0h1m1 0h1m1 0h4m2 0h1m-29 1h3m1 0h1m1 0h2m1 0h2m1 0h2m1 0h4m1 0h1m2 0h1m1 0h1m1 0h1m-26 1h1m4 0h4m3 0h2m2 0h5m1 0h2m1 0h1m-26 1h2m1 0h2m4 0h3m2 0h3m1 0h2m1 0h1m3 0h2m-29 1h2m1 0h3m2 0h1m2 0h1m2 0h1m4 0h1m2 0h1m1 0h2m2 0h1m-29 1h1m1 0h5m1 0h1m1 0h2m3 0h3m2 0h1m-21 1h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m5 0h1m3 0h1m1 0h1m2 0h1m-28 1h1m1 0h1m1 0h1m1 0h2m1 0h3m1 0h1m1 0h4m1 0h8m-20 1h5m1 0h1m2 0h1m1 0h2m3 0h1m3 0h1m-29 1h7m2 0h1m5 0h2m1 0h3m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h1m3 0h1m1 0h2m4 0h1m3 0h1m2 0h2m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h9m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h3m2 0h2m2 0h2m1 0h1m3 0h2m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h6m2 0h1m3 0h1m1 0h1m1 0h2m-28 1h1m5 0h1m2 0h1m1 0h1m6 0h1m1 0h1m3 0h2m1 0h1m-28 1h7m1 0h4m1 0h3m3 0h1m1 0h4m1 0h1"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">Ł</span>
+          <span class="body">
+            <span class="label">Litecoin <span class="net">Mainnet</span></span>
+            <span class="value mono">MTezYHoaNE2kngye3nBBVsbkqxJRnSMwcS</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="MTezYHoaNE2kngye3nBBVsbkqxJRnSMwcS"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-ltc"
+                    aria-expanded="false" aria-controls="qr-ltc">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-ltc" hidden><svg viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m2 0h1m1 0h1m3 0h2m1 0h3m1 0h7m-29 1h1m5 0h1m2 0h1m2 0h1m4 0h2m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h1m5 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h3m1 0h4m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h4m1 0h2m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h3m2 0h1m1 0h1m3 0h2m-21 1h1m1 0h5m5 0h1m1 0h2m1 0h1m2 0h1m1 0h5m-26 1h2m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m4 0h5m1 0h1m1 0h1m-28 1h1m3 0h3m2 0h2m3 0h2m1 0h1m3 0h2m2 0h1m-27 1h3m4 0h2m1 0h1m3 0h1m4 0h1m1 0h2m2 0h1m-26 1h1m4 0h2m1 0h5m2 0h3m7 0h1m-23 1h1m4 0h1m4 0h5m2 0h5m1 0h3m-29 1h1m1 0h1m2 0h3m1 0h8m1 0h1m6 0h1m-26 1h1m1 0h1m1 0h2m2 0h2m2 0h2m4 0h2m2 0h1m1 0h2m1 0h1m-25 1h2m1 0h2m1 0h1m1 0h2m1 0h2m7 0h1m-24 1h2m1 0h1m4 0h1m2 0h2m3 0h3m1 0h1m1 0h1m1 0h1m1 0h1m-27 1h1m1 0h2m2 0h1m1 0h4m3 0h4m2 0h4m-25 1h1m4 0h1m2 0h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h3m-26 1h1m3 0h6m1 0h1m3 0h2m2 0h6m1 0h1m1 0h1m-21 1h3m1 0h3m1 0h1m3 0h1m3 0h4m-28 1h7m4 0h10m1 0h1m1 0h3m-27 1h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h3m3 0h2m1 0h2m-29 1h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h1m2 0h5m1 0h2m-28 1h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h6m3 0h1m2 0h2m-29 1h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h3m3 0h5m1 0h1m-28 1h1m5 0h1m3 0h2m1 0h2m3 0h3m4 0h1m1 0h1m-28 1h7m1 0h2m4 0h3m6 0h1"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">◎</span>
+          <span class="body">
+            <span class="label">Solana <span class="net">Mainnet</span></span>
+            <span class="value mono">26nNtkpcRJD7nVPr7wWbhTRzqxTRg6CxLbC5Xc1gAs8Y</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="26nNtkpcRJD7nVPr7wWbhTRzqxTRg6CxLbC5Xc1gAs8Y"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-sol"
+                    aria-expanded="false" aria-controls="qr-sol">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-sol" hidden><svg viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m3 0h1m2 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h2m3 0h1m5 0h1m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h4m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h3m1 0h1m1 0h4m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m4 0h1m6 0h1m2 0h1m4 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m3 0h2m1 0h4m3 0h3m3 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h1m2 0h1m2 0h1m2 0h1m-18 1h1m4 0h3m1 0h1m5 0h1m2 0h1m1 0h2m1 0h2m5 0h2m-30 1h1m1 0h1m1 0h4m1 0h1m3 0h2m1 0h1m3 0h1m3 0h5m-32 1h3m1 0h1m1 0h1m1 0h5m1 0h1m2 0h1m9 0h1m3 0h1m-31 1h1m7 0h1m1 0h2m4 0h3m2 0h2m1 0h2m2 0h3m-30 1h1m1 0h3m2 0h1m1 0h1m3 0h3m1 0h1m2 0h2m2 0h4m1 0h2m-33 1h1m2 0h1m1 0h1m1 0h2m3 0h1m1 0h3m1 0h1m1 0h1m1 0h6m3 0h2m-33 1h1m1 0h1m3 0h5m1 0h3m3 0h1m2 0h1m5 0h2m1 0h1m-27 1h1m2 0h1m2 0h5m1 0h1m1 0h1m1 0h1m1 0h4m1 0h4m-29 1h2m2 0h1m1 0h2m1 0h2m3 0h4m2 0h1m2 0h1m2 0h3m-23 1h3m2 0h8m1 0h4m1 0h1m1 0h1m1 0h2m-31 1h1m2 0h3m1 0h4m2 0h3m1 0h1m1 0h5m3 0h1m2 0h1m-33 1h1m1 0h4m1 0h2m2 0h1m1 0h1m3 0h4m1 0h1m5 0h3m1 0h1m-32 1h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m-33 1h1m1 0h1m1 0h1m2 0h1m1 0h4m1 0h2m2 0h3m1 0h1m3 0h1m1 0h4m-32 1h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h1m1 0h4m1 0h1m3 0h1m3 0h1m1 0h1m-31 1h1m1 0h1m1 0h1m2 0h4m1 0h1m3 0h2m1 0h1m3 0h2m1 0h2m1 0h2m-31 1h2m1 0h1m1 0h4m2 0h3m1 0h2m2 0h1m2 0h7m1 0h1m-23 1h1m3 0h3m1 0h2m2 0h1m1 0h1m1 0h1m3 0h2m1 0h2m-33 1h7m1 0h1m1 0h3m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-32 1h1m5 0h1m3 0h1m1 0h2m1 0h2m1 0h2m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m2 0h3m1 0h2m1 0h2m2 0h3m1 0h6m-30 1h1m1 0h3m1 0h1m2 0h2m2 0h8m4 0h1m2 0h1m1 0h1m1 0h1m-33 1h1m1 0h3m1 0h1m4 0h3m1 0h1m3 0h1m3 0h1m1 0h2m1 0h2m1 0h2m-33 1h1m5 0h1m1 0h1m1 0h3m4 0h1m4 0h1m2 0h2m2 0h2m-31 1h7m3 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m6 0h1"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">◈</span>
+          <span class="body">
+            <span class="label">TON <span class="net">Mainnet</span></span>
+            <span class="value mono">UQAPneN0RW55f5f7JpguS9u2XEBiE309pYlzg0_vSNE2lTGW</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="UQAPneN0RW55f5f7JpguS9u2XEBiE309pYlzg0_vSNE2lTGW"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-ton"
+                    aria-expanded="false" aria-controls="qr-ton">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-ton" hidden><svg viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m4 0h3m2 0h2m2 0h1m3 0h1m1 0h7m-33 1h1m5 0h1m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h3m3 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m7 0h4m2 0h4m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m4 0h1m1 0h1m1 0h1m2 0h2m2 0h1m1 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m3 0h1m1 0h3m2 0h2m1 0h3m-25 1h1m5 0h1m1 0h2m1 0h3m3 0h1m1 0h2m1 0h1m1 0h3m2 0h3m-32 1h2m1 0h1m4 0h1m1 0h1m2 0h1m3 0h1m4 0h2m1 0h1m2 0h1m1 0h3m-32 1h1m1 0h1m2 0h2m1 0h2m2 0h5m2 0h3m2 0h7m-30 1h1m1 0h1m3 0h1m1 0h2m1 0h1m3 0h2m1 0h1m4 0h6m-31 1h1m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h5m-32 1h1m5 0h1m2 0h2m6 0h1m4 0h5m3 0h1m-32 1h1m1 0h2m1 0h2m1 0h1m1 0h2m2 0h3m3 0h1m1 0h1m4 0h1m1 0h3m-30 1h2m4 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m1 0h5m-32 1h6m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m4 0h1m1 0h1m3 0h1m-30 1h1m4 0h3m2 0h1m2 0h2m2 0h2m1 0h4m1 0h1m2 0h3m-33 1h1m5 0h1m2 0h2m4 0h5m3 0h1m2 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m2 0h1m1 0h1m2 0h3m2 0h3m3 0h2m1 0h1m3 0h2m1 0h3m-31 1h4m1 0h5m1 0h1m2 0h1m2 0h1m2 0h2m1 0h2m2 0h3m1 0h1m-33 1h1m1 0h2m3 0h1m1 0h1m1 0h1m2 0h1m10 0h2m1 0h2m1 0h2m-33 1h1m2 0h4m1 0h1m3 0h3m2 0h3m2 0h1m1 0h1m3 0h1m1 0h2m-32 1h1m4 0h1m2 0h1m1 0h3m2 0h2m1 0h3m1 0h2m2 0h2m1 0h2m-31 1h8m2 0h1m1 0h2m2 0h2m2 0h2m2 0h5m2 0h2m-25 1h1m2 0h1m1 0h1m2 0h2m1 0h2m2 0h2m3 0h1m1 0h3m-33 1h7m2 0h1m1 0h2m1 0h4m4 0h3m1 0h1m1 0h1m1 0h1m-31 1h1m5 0h1m2 0h1m1 0h2m1 0h1m2 0h2m1 0h1m3 0h1m3 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h2m2 0h3m4 0h1m2 0h5m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h3m2 0h2m2 0h1m1 0h1m1 0h1m2 0h1m2 0h2m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h4m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m-33 1h1m5 0h1m3 0h1m2 0h1m4 0h1m5 0h1m3 0h3m-31 1h7m1 0h1m2 0h2m1 0h2m4 0h1m1 0h5m1 0h1m2 0h1"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">₮</span>
+          <span class="body">
+            <span class="label">USDT <span class="net">TRC-20 · Tron</span></span>
+            <span class="value mono">TYxiZUNYFqpdxpEjaRFey5thu3tHPK7eXo</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="TYxiZUNYFqpdxpEjaRFey5thu3tHPK7eXo"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-usdt"
+                    aria-expanded="false" aria-controls="qr-usdt">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-usdt" hidden><svg viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m1 0h3m2 0h2m1 0h1m5 0h7m-29 1h1m5 0h1m3 0h1m1 0h4m3 0h1m2 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m4 0h2m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m8 0h2m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h2m2 0h2m1 0h3m-18 1h1m3 0h1m1 0h5m2 0h1m3 0h1m3 0h5m2 0h1m-29 1h1m1 0h2m3 0h1m3 0h4m6 0h5m2 0h1m-29 1h3m1 0h1m1 0h1m2 0h4m2 0h1m1 0h2m1 0h2m1 0h1m1 0h1m2 0h1m-28 1h2m4 0h1m2 0h3m1 0h1m2 0h2m1 0h3m2 0h1m1 0h2m-29 1h1m1 0h2m2 0h5m2 0h3m1 0h5m4 0h1m1 0h1m-29 1h2m1 0h2m4 0h4m2 0h2m4 0h5m1 0h2m-29 1h2m2 0h1m1 0h2m2 0h1m1 0h5m4 0h3m2 0h1m1 0h1m-29 1h3m2 0h1m2 0h1m1 0h1m1 0h2m1 0h9m1 0h1m2 0h1m-26 1h2m1 0h3m4 0h1m1 0h3m1 0h3m1 0h1m2 0h1m1 0h1m-29 1h1m7 0h1m1 0h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h2m-26 1h2m2 0h2m2 0h2m3 0h1m1 0h2m3 0h1m2 0h1m2 0h1m-25 1h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m-29 1h2m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m4 0h9m-20 1h5m2 0h4m1 0h1m3 0h1m2 0h1m-28 1h7m1 0h2m1 0h5m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-29 1h1m5 0h1m4 0h1m1 0h1m3 0h1m1 0h2m3 0h2m1 0h1m-28 1h1m1 0h3m1 0h1m1 0h1m2 0h3m2 0h1m2 0h6m1 0h1m-27 1h1m1 0h3m1 0h1m4 0h1m1 0h3m4 0h2m1 0h1m1 0h1m2 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h1m3 0h1m3 0h1m1 0h2m-29 1h1m5 0h1m2 0h1m1 0h2m1 0h1m1 0h2m2 0h2m1 0h3m1 0h2m-29 1h7m1 0h1m1 0h1m1 0h4m4 0h1m1 0h6"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">$</span>
+          <span class="body">
+            <span class="label">USDC <span class="net">ERC-20 · Ethereum</span></span>
+            <span class="value mono">0xeBE5166444118945204100e9E935C1dcE904d74a</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="0xeBE5166444118945204100e9E935C1dcE904d74a"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-usdc"
+                    aria-expanded="false" aria-controls="qr-usdc">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-usdc" hidden><svg viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m3 0h2m2 0h1m4 0h1m2 0h7m-29 1h1m5 0h1m2 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m3 0h1m2 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m5 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h3m3 0h3m1 0h1m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h2m5 0h2m1 0h1m1 0h1m-21 1h1m1 0h5m2 0h2m2 0h3m1 0h1m2 0h1m1 0h5m-27 1h1m2 0h2m4 0h1m1 0h1m3 0h2m1 0h2m2 0h1m1 0h1m2 0h1m-22 1h1m2 0h1m1 0h1m2 0h3m4 0h1m2 0h1m1 0h1m-27 1h1m1 0h2m1 0h1m2 0h1m2 0h1m11 0h3m-26 1h1m1 0h1m3 0h4m2 0h2m1 0h1m1 0h2m1 0h2m1 0h1m-23 1h2m1 0h2m1 0h2m2 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h2m-29 1h1m1 0h2m2 0h1m1 0h2m3 0h3m2 0h1m2 0h1m2 0h2m-21 1h1m1 0h1m3 0h2m1 0h3m2 0h1m3 0h2m2 0h1m-28 1h1m1 0h1m3 0h4m1 0h1m1 0h1m1 0h1m4 0h2m1 0h1m1 0h4m-29 1h4m1 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h2m2 0h1m-29 1h1m1 0h1m2 0h2m1 0h2m4 0h3m3 0h3m1 0h2m-26 1h1m1 0h2m3 0h1m4 0h1m2 0h1m4 0h2m1 0h2m2 0h1m-28 1h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h7m1 0h8m-20 1h1m3 0h1m4 0h1m1 0h2m3 0h1m3 0h1m-29 1h7m2 0h2m1 0h1m2 0h2m1 0h3m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h3m1 0h1m1 0h1m5 0h1m3 0h1m2 0h2m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h9m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h2m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h7m2 0h1m1 0h1m1 0h2m-28 1h1m5 0h1m3 0h2m3 0h2m2 0h4m4 0h1m-28 1h7m1 0h2m1 0h2m1 0h5m4 0h4"/></svg></div>
+      </div>
+
+      <div class="entry">
+        <div class="method">
+          <span class="glyph">$</span>
+          <span class="body">
+            <span class="label">USDC <span class="net">BEP-20 · BNB Chain</span></span>
+            <span class="value mono">0x8451C596f1Bbe6A043689b925C9399Ea598E7445</span>
+          </span>
+          <span class="tools">
+            <button type="button" class="copy" data-copy="0x8451C596f1Bbe6A043689b925C9399Ea598E7445"></button>
+            <button type="button" class="qr-toggle" data-qr="qr-usdcb"
+                    aria-expanded="false" aria-controls="qr-usdcb">QR</button>
+          </span>
+        </div>
+        <div class="qr" id="qr-usdcb" hidden><svg viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0f141b" d="M2 2.5h7m2 0h4m3 0h1m3 0h1m1 0h7m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m5 0h1m6 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m5 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m3 0h2m2 0h1m1 0h3m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h4m2 0h1m1 0h1m1 0h3m-21 1h1m5 0h1m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m2 0h3m-28 1h1m2 0h2m3 0h3m4 0h3m1 0h2m1 0h6m-26 1h7m2 0h6m1 0h1m1 0h2m1 0h2m2 0h1m-28 1h4m6 0h1m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m-23 1h1m3 0h2m2 0h3m1 0h3m1 0h2m2 0h1m4 0h1m-27 1h4m3 0h3m1 0h1m1 0h3m2 0h1m2 0h1m1 0h2m1 0h2m-28 1h1m3 0h3m6 0h5m2 0h1m3 0h1m1 0h1m-28 1h1m1 0h1m6 0h3m2 0h1m3 0h1m4 0h2m1 0h1m1 0h1m-29 1h2m2 0h1m1 0h5m1 0h2m1 0h1m1 0h2m1 0h1m4 0h4m-29 1h1m2 0h1m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m2 0h1m2 0h3m2 0h2m-29 1h2m4 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h2m2 0h1m1 0h1m-29 1h1m1 0h2m7 0h1m9 0h1m1 0h3m-26 1h1m1 0h3m1 0h1m1 0h3m1 0h2m2 0h1m3 0h5m2 0h1m-20 1h1m1 0h2m3 0h2m1 0h3m3 0h1m1 0h2m-28 1h7m3 0h3m1 0h7m1 0h1m1 0h4m-28 1h1m5 0h1m5 0h1m1 0h1m5 0h1m3 0h1m3 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m2 0h3m3 0h7m2 0h1m-28 1h1m1 0h3m1 0h1m4 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h1m2 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m2 0h2m1 0h5m3 0h5m1 0h1m1 0h1m-29 1h7m1 0h1m1 0h2m1 0h7m1 0h2m2 0h2"/></svg></div>
+      </div>
+
     </div>
 
     <div class="card">
@@ -305,6 +483,8 @@
         copy: 'Копіювати',
         copied: 'Скопійовано',
         copyFail: 'Виділено — Ctrl+C',
+        cryptoTitle: 'Криптовалюта',
+        cryptoWarn: 'Надсилайте лише вказану монету у вказаній мережі. Переказ у чужій мережі втрачається безповоротно — адресу зручніше скопіювати кнопкою або відсканувати QR.',
         policy: 'Політика конфіденційності'
       },
       ru: {
@@ -323,6 +503,8 @@
         copy: 'Копировать',
         copied: 'Скопировано',
         copyFail: 'Выделено — Ctrl+C',
+        cryptoTitle: 'Криптовалюта',
+        cryptoWarn: 'Отправляйте только указанную монету в указанной сети. Перевод в чужой сети теряется безвозвратно — адрес надёжнее скопировать кнопкой или отсканировать QR.',
         policy: 'Политика конфиденциальности'
       },
       en: {
@@ -341,6 +523,8 @@
         copy: 'Copy',
         copied: 'Copied',
         copyFail: 'Selected — Ctrl+C',
+        cryptoTitle: 'Crypto',
+        cryptoWarn: 'Send only the listed coin on the listed network. A transfer on the wrong network is lost for good — copy the address with the button or scan the QR instead of retyping it.',
         policy: 'Privacy Policy'
       }
     };
@@ -387,6 +571,9 @@
         }
       );
 
+      document.getElementById('crypto-title').textContent = t.cryptoTitle;
+      document.getElementById('crypto-warn').textContent = t.cryptoWarn;
+
       var policy = document.getElementById('policy-link');
       policy.textContent = t.policy;
 
@@ -411,6 +598,20 @@
       }
     );
 
+    // QR раскрывается по кнопке — иначе восемь кодов растянули бы страницу.
+    Array.prototype.forEach.call(
+      document.querySelectorAll('button.qr-toggle'),
+      function (btn) {
+        btn.addEventListener('click', function () {
+          var panel = document.getElementById(btn.dataset.qr);
+          if (!panel) return;
+          var open = panel.hasAttribute('hidden');
+          if (open) { panel.removeAttribute('hidden'); } else { panel.setAttribute('hidden', ''); }
+          btn.setAttribute('aria-expanded', String(open));
+        });
+      }
+    );
+
     // Копирование реквизита: современный API с откатом на execCommand для
     // старых мобильных браузеров и не-HTTPS.
     Array.prototype.forEach.call(
@@ -432,7 +633,7 @@
           // Буфер закрыт (нет HTTPS, отказ в правах, страница не в фокусе) —
           // выделяем значение, чтобы копирование вручную осталось в один шаг.
           var selectValue = function () {
-            var el = btn.parentElement.querySelector('.value');
+            var el = btn.closest('.method').querySelector('.value');
             if (el) {
               var range = document.createRange();
               range.selectNodeContents(el);
