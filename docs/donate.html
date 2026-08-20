@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0F141B" />
+  <title>OctoTik &amp; OctoClient — Support the project</title>
+  <meta name="description" content="Support the development of OctoTik and OctoClient. The apps are free; donations unlock nothing." />
+  <style>
+    :root {
+      --accent: #2AABEE;
+      --accent-soft: #229ED9;
+      --bg: #0F141B;
+      --surface: #18222C;
+      --surface-top: #1B2734;
+      --border: #2B3845;
+      --text: #E9EEF4;
+      --muted: #8595A6;
+      --success: #34C759;
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+    header {
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #fff;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: 28px;
+      margin: 8px 0 4px;
+      font-weight: 800;
+    }
+    .apps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 14px 0 0;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-top: 16px;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    p { color: var(--text); margin: 10px 0; }
+    .muted { color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Переключатель языка — те же UA / RU / EN, что и в приложении. */
+    .langs {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 22px 0 0;
+    }
+    .langs button {
+      appearance: none;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 7px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .langs button:hover { color: var(--text); }
+    .langs button[aria-pressed="true"] {
+      background: rgba(42, 171, 238, 0.16);
+      border-color: rgba(42, 171, 238, 0.45);
+      color: var(--accent);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 4px;
+    }
+
+    /* Строка способа доната: слева иконка, по центру подпись + значение. */
+    .method {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 4px;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+    }
+    .method:first-of-type { border-top: 0; }
+    .method .glyph {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: rgba(42, 171, 238, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      line-height: 1;
+    }
+    .method .body { flex: 1 1 auto; min-width: 0; }
+    .method .label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .method .value {
+      display: block;
+      font-weight: 700;
+      word-break: break-all;
+      font-variant-numeric: tabular-nums;
+    }
+    a.method:hover { text-decoration: none; }
+    a.method:hover .value { text-decoration: underline; }
+    .method .action {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    button.copy {
+      appearance: none;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-top);
+      color: var(--text);
+    }
+    button.copy:hover { border-color: var(--accent); color: var(--accent); }
+    button.copy.done { border-color: var(--success); color: var(--success); }
+
+    .thanks {
+      color: var(--muted);
+      font-style: italic;
+      margin: 16px 0 0;
+    }
+    footer {
+      text-align: center;
+      margin-top: 36px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    footer .brand {
+      display: block;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      margin: 6px 0;
+      font-size: 16px;
+    }
+    footer a { color: var(--accent); }
+    @media (max-width: 480px) {
+      .card { padding: 20px 18px; }
+      .method .action { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">O</div>
+      <h1 id="page-title">Support the project</h1>
+      <div class="apps">
+        <span class="pill">OctoTik</span>
+        <span class="pill">OctoClient</span>
+      </div>
+      <div class="langs" role="group" aria-label="Language">
+        <button type="button" data-lang="uk" aria-pressed="false">UA</button>
+        <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <p class="note" id="note"></p>
+
+      <a class="method" href="https://send.monobank.ua/jar/AZo6hBHWzs" target="_blank" rel="noopener">
+        <span class="glyph">🏦</span>
+        <span class="body">
+          <span class="label">Monobank jar</span>
+          <span class="value">send.monobank.ua/jar/AZo6hBHWzs</span>
+        </span>
+        <span class="action" data-i18n="open"></span>
+      </a>
+
+      <div class="method">
+        <span class="glyph">💳</span>
+        <span class="body">
+          <span class="label">Card</span>
+          <span class="value" id="card-value">4874 1000 3223 8340</span>
+        </span>
+        <button type="button" class="copy" id="copy-card" data-copy="4874100032238340"></button>
+      </div>
+
+      <a class="method" href="https://revolut.me/seafarer_doc" target="_blank" rel="noopener">
+        <span class="glyph">🌍</span>
+        <span class="body">
+          <span class="label">Revolut</span>
+          <span class="value">revolut.me/seafarer_doc</span>
+        </span>
+        <span class="action" data-i18n="open"></span>
+      </a>
+
+      <!--
+        Новый способ доната добавляется такой же строкой. Для кошелька, куда
+        нужно скопировать адрес, — блок с кнопкой .copy (как у карты):
+
+        <div class="method">
+          <span class="glyph">₿</span>
+          <span class="body">
+            <span class="label">Bitcoin</span>
+            <span class="value">bc1q…</span>
+          </span>
+          <button type="button" class="copy" data-copy="bc1q…"></button>
+        </div>
+      -->
+    </div>
+
+    <div class="card">
+      <h2 id="text-title"></h2>
+      <div id="text-body"></div>
+      <p class="thanks" id="text-thanks"></p>
+    </div>
+
+    <footer>
+      <a href="./" id="policy-link"></a><br />
+      All rights reserved<br />
+      2026
+      <span class="brand">
+        <a href="https://t.me/SeafarerDOC_Support" target="_blank" rel="noopener">DOC</a>
+      </span>
+    </footer>
+  </div>
+
+  <script>
+    // Тексты повторяют экран Support в приложении — правки держать синхронными
+    // с lib/screens/support_screen.dart.
+    var TEXTS = {
+      uk: {
+        htmlLang: 'uk',
+        heading: 'Підтримати проєкт',
+        title: 'Чому ваша підтримка справді важлива',
+        paragraphs: [
+          '🐙 OctoTik і OctoClient — це не команда з офісу із зарплатами та дедлайнами. Це розробка в перервах між вахтами, десь посеред океану, часто на супутниковому інтернеті із затримкою в секунду — або чергова esim, куплена у водах Китаю.',
+          'Кожне оновлення, кожен виправлений баг, кожна нова фіча — це години після зміни, коли можна було б просто відпочивати.',
+          'Застосунок безкоштовний і таким залишиться. Але сервери, підписка Apple Developer, домени — усе це не безкоштовне, і тримається зараз суто на ентузіазмі.',
+          'Якщо застосунок реально допомагає вам у роботі — економить час, нерви, спрощує життя на судні — підтримайте проєкт. Навіть невеликий донат = мотивація робити це далі та швидше.'
+        ],
+        thanks: 'Дякую всім, хто вже підтримав — ви тримаєте цей проєкт на плаву у прямому сенсі слова ⚓️',
+        note: 'Донат — це добровільна підтримка. Він не відкриває жодних додаткових функцій і не дає жодних переваг: усі можливості застосунку були і залишаються безкоштовними для всіх.',
+        open: 'відкрити',
+        copy: 'Копіювати',
+        copied: 'Скопійовано',
+        copyFail: 'Виділено — Ctrl+C',
+        policy: 'Політика конфіденційності'
+      },
+      ru: {
+        htmlLang: 'ru',
+        heading: 'Поддержать проект',
+        title: 'Почему ваша поддержка реально важна',
+        paragraphs: [
+          '🐙 OctoTik и OctoClient — это не команда из офиса с зарплатами и дедлайнами. Это разработка в перерывах между вахтами, где-то посреди океана, часто на спутниковом интернете с задержкой в секунду или покупка очередной esim в водах Китая.',
+          'Каждое обновление, каждый исправленный баг, каждая новая фича — это часы после смены, когда можно было бы просто отдыхать.',
+          'Приложение бесплатное и таким останется. Но сервера, Apple Developer подписка, домены — всё это не бесплатно, и держится сейчас чисто на энтузиазме.',
+          'Если приложение реально помогает вам в работе — экономит время, нервы, упрощает жизнь на судне — поддержите проект. Даже небольшой донат = мотивация делать это дальше и быстрее.'
+        ],
+        thanks: 'Спасибо всем, кто уже поддержал — вы держите этот проект на плаву в прямом смысле слова ⚓️',
+        note: 'Донат — это добровольная поддержка. Он не открывает никаких дополнительных функций и не даёт никаких преимуществ: все возможности приложения были и остаются бесплатными для всех.',
+        open: 'открыть',
+        copy: 'Копировать',
+        copied: 'Скопировано',
+        copyFail: 'Выделено — Ctrl+C',
+        policy: 'Политика конфиденциальности'
+      },
+      en: {
+        htmlLang: 'en',
+        heading: 'Support the project',
+        title: 'Why your support actually matters',
+        paragraphs: [
+          "OctoTik and OctoClient aren't built by an office team with salaries and deadlines. They're built between watches, somewhere in the middle of the ocean, often on satellite internet with a full second of lag.",
+          "Every update, every bug fix, every new feature is hours spent after a shift — hours that could've just been rest.",
+          "The app is free and will stay that way. But servers, the Apple Developer subscription, domains — none of that is free, and right now it's all running on pure enthusiasm.",
+          'If the app genuinely helps you in your work — saves time, saves nerves, makes life onboard easier — consider supporting the project. Even a small donation = motivation to keep building, faster.'
+        ],
+        thanks: "Thanks to everyone who's already chipped in — you're the ones keeping this project afloat, literally ⚓️",
+        note: 'A donation is voluntary support. It does not unlock any extra features and gives no advantage — every part of the app was and stays free for everyone.',
+        open: 'open',
+        copy: 'Copy',
+        copied: 'Copied',
+        copyFail: 'Selected — Ctrl+C',
+        policy: 'Privacy Policy'
+      }
+    };
+
+    // Порядок выбора: ?lang= из ссылки (приложение может передать свой язык),
+    // затем прошлый выбор, затем язык браузера, иначе английский.
+    function pickLang() {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q && TEXTS[q.toLowerCase()]) return q.toLowerCase();
+      try {
+        var saved = localStorage.getItem('octotik-donate-lang');
+        if (saved && TEXTS[saved]) return saved;
+      } catch (e) { /* приватный режим — просто игнорируем */ }
+      var nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+      return TEXTS[nav] ? nav : 'en';
+    }
+
+    function render(lang) {
+      var t = TEXTS[lang];
+      document.documentElement.lang = t.htmlLang;
+      document.getElementById('page-title').textContent = t.heading;
+      document.getElementById('note').textContent = t.note;
+      document.getElementById('text-title').textContent = t.title;
+      document.getElementById('text-thanks').textContent = t.thanks;
+
+      var body = document.getElementById('text-body');
+      body.textContent = '';
+      t.paragraphs.forEach(function (text) {
+        var p = document.createElement('p');
+        p.textContent = text;
+        body.appendChild(p);
+      });
+
+      Array.prototype.forEach.call(
+        document.querySelectorAll('[data-i18n="open"]'),
+        function (el) { el.textContent = t.open + ' ↗'; }
+      );
+
+      Array.prototype.forEach.call(
+        document.querySelectorAll('button.copy'),
+        function (b) {
+          // Подпись «скопировано / выделено» держится своим таймером.
+          if (!b.dataset.busy) b.textContent = t.copy;
+        }
+      );
+
+      var policy = document.getElementById('policy-link');
+      policy.textContent = t.policy;
+
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.langs button'),
+        function (b) {
+          b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+        }
+      );
+
+      try { localStorage.setItem('octotik-donate-lang', lang); } catch (e) {}
+      current = lang;
+    }
+
+    var current = pickLang();
+    render(current);
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll('.langs button'),
+      function (b) {
+        b.addEventListener('click', function () { render(b.dataset.lang); });
+      }
+    );
+
+    // Копирование реквизита: современный API с откатом на execCommand для
+    // старых мобильных браузеров и не-HTTPS.
+    Array.prototype.forEach.call(
+      document.querySelectorAll('button.copy'),
+      function (btn) {
+        btn.addEventListener('click', function () {
+          var value = btn.dataset.copy || '';
+          var restore = function () {
+            delete btn.dataset.busy;
+            btn.classList.remove('done');
+            btn.textContent = TEXTS[current].copy;
+          };
+          var done = function () {
+            btn.dataset.busy = '1';
+            btn.textContent = TEXTS[current].copied;
+            btn.classList.add('done');
+            setTimeout(restore, 1800);
+          };
+          // Буфер закрыт (нет HTTPS, отказ в правах, страница не в фокусе) —
+          // выделяем значение, чтобы копирование вручную осталось в один шаг.
+          var selectValue = function () {
+            var el = btn.parentElement.querySelector('.value');
+            if (el) {
+              var range = document.createRange();
+              range.selectNodeContents(el);
+              var sel = window.getSelection();
+              sel.removeAllRanges();
+              sel.addRange(range);
+            }
+            btn.dataset.busy = '1';
+            btn.textContent = TEXTS[current].copyFail;
+            setTimeout(restore, 2600);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(value).then(done, fallback);
+          } else {
+            fallback();
+          }
+          function fallback() {
+            var ta = document.createElement('textarea');
+            ta.value = value;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'absolute';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.body.removeChild(ta);
+            if (ok) { done(); } else { selectValue(); }
+          }
+        });
+      }
+    );
+  </script>
+</body>
+</html>
