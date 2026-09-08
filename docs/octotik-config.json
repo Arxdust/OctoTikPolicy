@@ -1,0 +1,9 @@
+{
+  "_comment": "Konfig OctoTik. Prilozhenie chitaet ego raz v sutki; nedostupen - rabotaet na vshityh znacheniyah.",
+  "schema": 1,
+  "onlineMapEnabled": true,
+  "tileUrlLightB64": "aHR0cHM6Ly9iYXNlbWFwcy5jYXJ0b2Nkbi5jb20vcmFzdGVydGlsZXMvbGlnaHRfYWxsL3t6fS97eH0ve3l9LnBuZz9rZXk9Y2IxXzMxd2tfMV9kNWFiZTlhMGM4ZjEyNTQ3NDY1ZTJhNWU=",
+  "tileUrlDarkB64": "aHR0cHM6Ly9iYXNlbWFwcy5jYXJ0b2Nkbi5jb20vcmFzdGVydGlsZXMvZGFya19hbGwve3p9L3t4fS97eX0ucG5nP2tleT1jYjFfMzF3a18xX2Q1YWJlOWEwYzhmMTI1NDc0NjVlMmE1ZQ==",
+  "tleUrl": "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=tle",
+  "attribution": "© OpenStreetMap  ·  © CARTO"
+}
