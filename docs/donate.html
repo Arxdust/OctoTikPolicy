@@ -274,7 +274,7 @@
       </div>
       <h1 id="page-title">Support the project</h1>
       <div class="apps">
-        <span class="pill">OctoTik</span>
+        <span class="pill" id="pill-octotik">OctoTik</span>
         <span class="pill">OctoClient</span>
       </div>
       <div class="langs" role="group" aria-label="Language">
@@ -287,11 +287,11 @@
     <div class="card">
       <p class="note" id="note"></p>
 
-      <a class="method" href="https://send.monobank.ua/jar/AZo6hBHWzs" target="_blank" rel="noopener">
+      <a class="method" id="jar-link" href="https://send.monobank.ua/jar/AZo6hBHWzs" target="_blank" rel="noopener">
         <span class="glyph">🏦</span>
         <span class="body">
           <span class="label">Monobank jar</span>
-          <span class="value">send.monobank.ua/jar/AZo6hBHWzs</span>
+          <span class="value" id="jar-value">send.monobank.ua/jar/AZo6hBHWzs</span>
         </span>
         <span class="action" data-i18n="open"></span>
       </a>
@@ -482,6 +482,7 @@
           'Застосунок безкоштовний і таким залишиться. Але сервери, підписка Apple Developer, домени — усе це не безкоштовне, і тримається зараз суто на ентузіазмі.',
           'Якщо застосунок реально допомагає вам у роботі — економить час, нерви, спрощує життя на судні — підтримайте проєкт. Навіть невеликий донат = мотивація робити це далі та швидше.'
         ],
+        clientLead: 'OctoClient — це не команда з офісу із зарплатами та дедлайнами. Це розробка в перервах між вахтами, десь посеред океану, часто на супутниковому інтернеті із затримкою в секунду — або чергова esim, куплена у водах Китаю.',
         thanks: 'Дякую всім, хто вже підтримав — ви тримаєте цей проєкт на плаву у прямому сенсі слова ⚓️',
         note: 'Донат — це добровільна підтримка. Він не відкриває жодних додаткових функцій і не дає жодних переваг: усі можливості застосунку були і залишаються безкоштовними для всіх.',
         open: 'відкрити',
@@ -502,6 +503,7 @@
           'Приложение бесплатное и таким останется. Но сервера, Apple Developer подписка, домены — всё это не бесплатно, и держится сейчас чисто на энтузиазме.',
           'Если приложение реально помогает вам в работе — экономит время, нервы, упрощает жизнь на судне — поддержите проект. Даже небольшой донат = мотивация делать это дальше и быстрее.'
         ],
+        clientLead: 'OctoClient — это не команда из офиса с зарплатами и дедлайнами. Это разработка в перерывах между вахтами, где-то посреди океана, часто на спутниковом интернете с задержкой в секунду или покупка очередной esim в водах Китая.',
         thanks: 'Спасибо всем, кто уже поддержал — вы держите этот проект на плаву в прямом смысле слова ⚓️',
         note: 'Донат — это добровольная поддержка. Он не открывает никаких дополнительных функций и не даёт никаких преимуществ: все возможности приложения были и остаются бесплатными для всех.',
         open: 'открыть',
@@ -522,6 +524,7 @@
           "The app is free and will stay that way. But servers, the Apple Developer subscription, domains — none of that is free, and right now it's all running on pure enthusiasm.",
           'If the app genuinely helps you in your work — saves time, saves nerves, makes life onboard easier — consider supporting the project. Even a small donation = motivation to keep building, faster.'
         ],
+        clientLead: "OctoClient isn't built by an office team with salaries and deadlines. It's built between watches, somewhere in the middle of the ocean, often on satellite internet with a full second of lag.",
         thanks: "Thanks to everyone who's already chipped in — you're the ones keeping this project afloat, literally ⚓️",
         note: 'A donation is voluntary support. It does not unlock any extra features and gives no advantage — every part of the app was and stays free for everyone.',
         open: 'open',
@@ -533,6 +536,29 @@
         policy: 'Privacy Policy'
       }
     };
+
+    // ?app=octoclient — страница, открытая из OctoClient: своя банка и карта,
+    // ни слова про OctoTik. Revolut и крипта общие. Банку и карту держать
+    // в согласии с lib/screens/support_screen.dart в OctoClient.
+    var APPS = {
+      octoclient: {
+        title: 'OctoClient — Support the project',
+        jar: 'https://send.monobank.ua/jar/2PFtuJpcX7',
+        card: '4874100034229537'
+      }
+    };
+    var app = APPS[(new URLSearchParams(location.search).get('app') || '').toLowerCase()] || null;
+
+    function applyApp() {
+      if (!app) return;
+      document.title = app.title;
+      var pill = document.getElementById('pill-octotik');
+      if (pill) pill.parentNode.removeChild(pill);
+      document.getElementById('jar-link').href = app.jar;
+      document.getElementById('jar-value').textContent = app.jar.replace(/^https:\/\//, '');
+      document.getElementById('card-value').textContent = app.card.replace(/(\d{4})(?=\d)/g, '$1 ');
+      document.getElementById('copy-card').dataset.copy = app.card;
+    }
 
     // Порядок выбора: ?lang= из ссылки (приложение может передать свой язык),
     // затем прошлый выбор, затем язык браузера, иначе английский.
@@ -557,7 +583,9 @@
 
       var body = document.getElementById('text-body');
       body.textContent = '';
-      t.paragraphs.forEach(function (text) {
+      // Для OctoClient первый абзац — про него одного.
+      var paragraphs = app ? [t.clientLead].concat(t.paragraphs.slice(1)) : t.paragraphs;
+      paragraphs.forEach(function (text) {
         var p = document.createElement('p');
         p.textContent = text;
         body.appendChild(p);
@@ -593,6 +621,7 @@
       current = lang;
     }
 
+    applyApp();
     var current = pickLang();
     render(current);
 
